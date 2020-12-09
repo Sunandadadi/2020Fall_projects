@@ -119,5 +119,6 @@ if __name__ == '__main__':
         )
     rate_of_growth = calculate_rate_of_growth(positive_cases, simulated_new_positive_cases)
     print("rate_of_growth", rate_of_growth)
-    # TODO: Add visualizations
+    # TODO: Add visualizations to compare monthly growth of positive cases (diagnosed through testing centers)
+    # TODO: Add visualizations to compare monthly growth of cases(had there been no test centers)
     # TODO: Read surveillance_data via API (unable to push on git due to large size)
