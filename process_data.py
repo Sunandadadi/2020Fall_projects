@@ -18,11 +18,10 @@ months = {
         8: 'Aug',
         9: 'Sep',
         10: 'Oct',
-        11: 'Nov',
-        12: 'Dec',
+        11: 'Nov'
     }
 
-# Building independent files for each month 
+# Building independent files for each month
 columns = ['current_status', 'sex', 'age_group']
 for key, val in months.items():
     temp = df.query('month=='+str(key))
