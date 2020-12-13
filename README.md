@@ -24,13 +24,15 @@ The availability and periodic use of COVID-19 virus testing for asymptomatic peo
 
 ## Results:
 
-![image info](monthly_growth_rate.png)
-
+![image info](monthly_growth_rate.png)\s\s
 The above visualization shows the estimated rate of growth in positive cases vs the actual rate of growth in positive cases.
 
-![image info](monthly_positive_cases.png)
+![image info](monthly_positive_cases.png)\s\s
+The above visualization shows the estimated new positive cases vs the actual new positive cases. The graph has no value in the actual new cases for the month of December because of missing data for December in the data source.
 
-The above visualization shows the estimated new positive cases vs the actual new positive cases. The dip in december in the actual new cases is because of missing data for december.
+## Conclusion:
+
+As seen from the above visualizations, had there been no testing centers, asymptotic patients being unaware of the infection may spread the virus to a significantly larger population.
 
 ### Data Sources
 1. https://data.cdc.gov/Case-Surveillance/COVID-19-Case-Surveillance-Public-Use-Data/vbim-akqf/data

@@ -278,8 +278,8 @@ def plot_visualizations(data):
     )
 
     plot_new_cases(months, \
-        fetch_normalize_data(list(map(lambda x: simulation_data[x].get('simulated_new_positive_cases', 0), simulation_data))), \
-        fetch_normalize_data(list(map(lambda x: simulation_data[x].get('positive_cases', 0), simulation_data))) \
+        list(map(lambda x: simulation_data[x].get('simulated_new_positive_cases', None), simulation_data)), \
+        list(map(lambda x: simulation_data[x].get('positive_cases', None), simulation_data)) \
     )
     return
 
