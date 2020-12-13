@@ -10,6 +10,7 @@ As the COVID-19 cases began to increase exponentially, many countries establishe
 
 Assuming against a scenario where a person immediately quarantines themselves after being diagnosed COVID 19 positive.
 If the symptom onset date (date when the symptoms are first detected) is empty, it is assumed that the person is asymptotic.
+Assuming that simulated new cases are carried into the next month
 
 ## Randomized variables:
 
@@ -21,7 +22,24 @@ If the symptom onset date (date when the symptoms are first detected) is empty, 
 
 The availability and periodic use of COVID-19 virus testing for asymptomatic people significantly reduces the rate of spread and peak number of simultaneous cases in a population.
 
-### Data Sources
-https://data.cdc.gov/Case-Surveillance/COVID-19-Case-Surveillance-Public-Use-Data/vbim-akqf/data
+## Results:
 
-https://data.cdc.gov/Case-Surveillance/United-States-COVID-19-Cases-and-Deaths-by-State-o/9mfq-cb36/data
+![image info](monthly_growth_rate.png)
+The above visualization shows the estimated rate of growth in positive cases vs the actual rate of growth in positive cases.
+
+
+![image info](monthly_positive_cases.png)
+The above visualization shows the estimated new positive cases vs the actual new positive cases. The dip in december in the actual new cases is because of missing data for december.
+
+### Data Sources
+1. https://data.cdc.gov/Case-Surveillance/COVID-19-Case-Surveillance-Public-Use-Data/vbim-akqf/data
+
+2. https://data.cdc.gov/Case-Surveillance/United-States-COVID-19-Cases-and-Deaths-by-State-o/9mfq-cb36/data
+
+### References
+
+- https://www.journaldev.com/45109/normalize-data-in-python
+- https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.pyplot.html
+- https://www.markdownguide.org/basic-syntax/
+- https://pages.uoregon.edu/rgp/PPPM613/class8a.htm
+- https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.query.html
