@@ -13,7 +13,7 @@ import random
 
 def load_clean_data(file_name):
     """
-    The function loads COVID 19 Case Surveillance data for the month of Nov'2020.
+    This function loads COVID 19 Case Surveillance data for different months
     It fetches data of only asymptotic cases.
     :param file_name: String value of the filename (expected to be in the same folder as this file)
     @return: dataframe containing the surveillance data
@@ -24,9 +24,10 @@ def load_clean_data(file_name):
 
 def fetch_total_test_cases(data):
     """
-    The function fetches the number of people who visited the test center.
+    This function fetches the number of people who visited the test center from the loaded data frame.
     :param data: Dataframe of the loaded dataset
     @return: Total number of people tested for COVID 19
+
     >>> data = pd.DataFrame({'c1': [1, 2, 3], 'c2': ['a', 'b', 'c']})
     >>> fetch_total_test_cases(data)
     3
@@ -42,9 +43,10 @@ def fetch_total_test_cases(data):
 
 def fetch_positive_cases(data):
     """
-    The function filters COVID 19 Cases with current status as Laboratory-confirmed case.
+    This function filters the loaded data to fetch data containing current status as Laboratory-confirmed case.
     :param data: Dataframe of the loaded dataset
     @return: Total number of people diagnosed as COVID 19 positive
+
     >>> data = pd.DataFrame({'current_status': ['Laboratory-confirmed case', 'Pending', 'Laboratory-confirmed case'], 'c2': ['a', 'b', 'c']})
     >>> fetch_positive_cases(data)
     2
@@ -57,10 +59,11 @@ def fetch_positive_cases(data):
 
 def fetch_probability_of_testing_positive(total_test_cases, positive_cases):
     """
-    The function filters COVID 19 Cases with current status as Laboratory-confirmed case.
+    This function calculates the probability of getting tested COVID 19 positive based on the loaded data
     :param total_test_cases: Total number of people tested for COVID 19
     :param positive_cases: Total number of people diagnosed as COVID 19 positive
     @return: The probability of people getting diagnosed as COVID 19 positive
+
     >>> positive_cases, total_test_cases = 10, 234
     >>> fetch_probability_of_testing_positive(total_test_cases, positive_cases)
     0.04
@@ -106,15 +109,12 @@ def fetch_random_samples(max_spread_count, max_days_as_carrier, positive_cases):
 
 def simulate_transmitted_cases(df, probability_of_testing_positive):
     """
-    The function calculates the number of individuals COVID 19 is transmitted to, because of comming in contact
-    with an infected person (unware of his infection)
-    :param max_spread_count: Randomized variable 1 - Total number of individuals an
-        infected person is likely to spread per day being unaware of their infection
-    :param max_days_as_carrier: Randomized variable 2 - Total number of days an
-        infected person is likely to act as an active carrier of the virus
-    :param positive_cases: Total number of people diagnosed as COVID 19 positive
+    This function calculates the number of individuals COVID 19 is transmitted to, because of comming in contact
+    with an infected person (unware of their infection)
+    :param df: DataFrame containing a random spread count sample and a random days acting as carrier
     :param probability_of_testing_positive: The probability of people getting diagnosed as COVID 19 positive
-    @return: Total number of non infectedpeople infected people are likely to spread the virus and diagnosed COVID 19 positive
+    @return: Total number of new infected people that are likely to spread the virus and diagnosed COVID 19 positive
+
     >>> df = pd.DataFrame({'Spread Count': [1, 2, 3], 'Days as carrier': [1, 1, 3]})
     >>> simulate_transmitted_cases(df, 1.0)
     12
@@ -122,7 +122,6 @@ def simulate_transmitted_cases(df, probability_of_testing_positive):
     >>> simulate_transmitted_cases(df, 0.5)
     54
     """
-    # TODO: Try to generate random spreads for each day
     # Total new cases is the number of people an infected person spreads the virus
     # for the days they act as carriers of the virus
     df['New Cases'] = df['Spread Count'] * df['Days as carrier']
@@ -130,9 +129,7 @@ def simulate_transmitted_cases(df, probability_of_testing_positive):
 
     # The probability of getting tested as COVID 19 positive w.r.t to the above calculated probability
     # for the given dataset
-    new_positive_cases = int(total_new_cases * probability_of_testing_positive)
-
-    return new_positive_cases
+    return int(total_new_cases * probability_of_testing_positive)
 
 
 def calculate_rate_of_growth(positive_cases, new_positive_cases):
@@ -142,6 +139,7 @@ def calculate_rate_of_growth(positive_cases, new_positive_cases):
     :param new_positive_cases: Total number of non infected people infected people are likely
         to spread the virus and diagnosed COVID 19 positive
     @return: Total rate of growth in the number of cases
+
     >>> positive_cases, new_positive_cases = 100, 3
     >>> calculate_rate_of_growth(positive_cases, new_positive_cases)
     -97.0
@@ -167,6 +165,11 @@ def run_simulation(max_spread_count_per_individual_per_day, max_days_individual_
     This is the starting function that runs the simulation
     :param max_spread_count_per_individual_per_day: Randomized variable 1
     :param max_days_individual_acts_as_carrier: Randomized variable 2
+    :param simulation_data: A dictionary containing various data points(like total test cases, positive cases, simulated new positive cases etc) for each month.
+        These are generated from the csv files for each month and using Monte Carlo Simulation to get new cases
+    :param curr_month: Current month for which data is loaded
+    :param next_month: Next month to which new cases are forwarded
+    @return: None Type
     """
     surveillance_data_file_name = curr_month + '_cases.csv'
 
@@ -198,22 +201,28 @@ def run_simulation(max_spread_count_per_individual_per_day, max_days_individual_
 
 def calculate_for_actual_growth_rate(simulated_data, months):
     """
-    This function fetches the actual rate of growth in the number of cases
-    :param simulated_data:
-    :param curr_month:
-    :param next_month:
+    This function fetches the actual rate of growth in the number of cases that is recorded in the simulated data dictionary
+    :param simulated_data: A dictionary containing various data points(like total test cases, positive cases, simulated new positive cases etc) for each month.
+        These are generated from the csv files for each month and using Monte Carlo Simulation to get new cases
+    :param months: A list containing months of the year
+    @return: None Type
     """
-
     for i in range(1, len(months) - 1):
         simulated_data[months[i]]['actual_rate_of_growth'] = calculate_rate_of_growth( \
                                                                 simulated_data[months[i-1]]['positive_cases'], \
                                                                 simulated_data[months[i]]['positive_cases'] \
                                                             )
-
     return
 
 
 def plot_rate_of_growth(months, expected_rate_of_growth, actual_rate_of_growth):
+    """
+    This function generates a matplotlib plot to compare expected rate of growth with the actual rate of growth
+    :param expected_rate_of_growth: The expected rate of growth in the number of positive cases (generated from the simulation)
+    :param actual_rate_of_growth: The actual rate of growth in the number of positive cases (calculated from the data source)
+    :param months: A list containing months of the year
+    @return: None Type
+    """
     plt.plot(months, expected_rate_of_growth, label='Estimated rate of growth', color='red', marker='o')
     plt.plot(months, actual_rate_of_growth, label='Actual rate of growth', color='black', marker='o')
     plt.title('Monthly growth rate of positives case')
@@ -224,6 +233,13 @@ def plot_rate_of_growth(months, expected_rate_of_growth, actual_rate_of_growth):
 
 
 def plot_new_cases(months, simulated_new_cases, actual_new_cases):
+    """
+    This function generates a matplotlib plot to compare expected new cases with the actual new cases
+    :param simulated_new_cases: The expected number of new positive cases (generated from the simulation)
+    :param actual_new_cases: The actual number of new positive cases (calculated from the data source)
+    :param months: A list containing months of the year
+    @return: None Type
+    """
     plt.plot(months, simulated_new_cases, label='Estimated new cases', color='red', marker='o')
     plt.plot(months, actual_new_cases, label='Actual new cases', color='black', marker='o')
     plt.title('Monthly growth of positives case')
@@ -238,6 +254,13 @@ def fetch_normalize_data(data):
     This function normalizes a list of data values
     :param data: list of values that need to be normalized
     @return: normalized data
+
+    >>> data = [1, 2, 3]
+    >>> fetch_normalize_data(data)
+    array([0.26726124, 0.53452248, 0.80178373])
+    >>> data = [1, 1, 1]
+    >>> fetch_normalize_data(data)
+    array([0.57735027, 0.57735027, 0.57735027])
     """
     data = np.array(data)
     return preprocessing.normalize([data])[0]
@@ -245,7 +268,7 @@ def fetch_normalize_data(data):
 
 def plot_visualizations(data):
     """
-    This function plots differnt visualizations for this project
+    This function generates differnt visualizations for this project
     :param data: A dictionary containing calculated values
     @return: None
     """
@@ -258,6 +281,7 @@ def plot_visualizations(data):
         fetch_normalize_data(list(map(lambda x: simulation_data[x].get('simulated_new_positive_cases', 0), simulation_data))), \
         fetch_normalize_data(list(map(lambda x: simulation_data[x].get('positive_cases', 0), simulation_data))) \
     )
+    return
 
 
 if __name__ == '__main__':

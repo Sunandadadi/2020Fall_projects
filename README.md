@@ -25,10 +25,11 @@ The availability and periodic use of COVID-19 virus testing for asymptomatic peo
 ## Results:
 
 ![image info](monthly_growth_rate.png)
+
 The above visualization shows the estimated rate of growth in positive cases vs the actual rate of growth in positive cases.
 
-
 ![image info](monthly_positive_cases.png)
+
 The above visualization shows the estimated new positive cases vs the actual new positive cases. The dip in december in the actual new cases is because of missing data for december.
 
 ### Data Sources
