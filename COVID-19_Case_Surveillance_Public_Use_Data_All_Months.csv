@@ -1,1 +1,2 @@
 # Adding this file for travis build
+'cdc_report_dt', 'onset_dt','current_status', 'sex', 'age_group'
