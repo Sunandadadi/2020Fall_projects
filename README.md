@@ -46,3 +46,4 @@ As seen from the above visualizations, had there been no testing centers, asympt
 - https://www.markdownguide.org/basic-syntax/
 - https://pages.uoregon.edu/rgp/PPPM613/class8a.htm
 - https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.query.html
+- https://hackernoon.com/continuous-integration-using-travis-on-github-1f7f2314b6b7

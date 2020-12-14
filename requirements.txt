@@ -2,4 +2,3 @@ sklearn
 matplotlib
 pandas
 numpy
-random
